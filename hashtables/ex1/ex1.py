@@ -27,12 +27,13 @@ def get_indices_of_item_weights(weights, length, limit):
         hash_table_insert(ht, weights[i], i)
 
         index = hash_table_retrieve(ht, (limit - weights[i]))
+        second_index = weights.index(weights[i])
 
-        if index is not None:
-            if i > index:
-                return (i, index)
+        if index is not None and index != second_index:
+            if second_index > index:
+                return (second_index, index)
             else: 
-                return (index, i)
+                return (index, second_index)
 
 
 
@@ -42,4 +43,4 @@ def print_answer(answer):
     else:
         print("None")
 
-print(get_indices_of_item_weights([4, 6, 10, 15, 16], 5, 21))
+print(get_indices_of_item_weights([4, 4], 2, 8))
