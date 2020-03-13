@@ -9,11 +9,14 @@ from hashtables import (HashTable,
 def get_indices_of_item_weights(weights, length, limit):
     ht = HashTable(16)
 
-    """
-    YOUR CODE HERE
-    """
+    for i in range(length):
+        for j in range(length):
+            if weights[i] + weights[j] == limit: 
+                if i > j:
+                    return (i, j)
+                else:
+                    return (j, i)
 
-    return None
 
 
 def print_answer(answer):
