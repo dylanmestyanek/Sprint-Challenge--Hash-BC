@@ -28,8 +28,11 @@ def get_indices_of_item_weights(weights, length, limit):
 
         index = hash_table_retrieve(ht, (limit - weights[i]))
 
-        if index:
-            print(index)        
+        if index is not None:
+            if i > index:
+                return (i, index)
+            else: 
+                return (index, i)
 
 
 
