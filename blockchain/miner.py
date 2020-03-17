@@ -1,5 +1,6 @@
 import hashlib
 import requests
+import json
 
 import sys
 
@@ -23,9 +24,12 @@ def proof_of_work(last_proof):
     start = timer()
 
     print("Searching for next proof")
+    block_string = json.dumps(last_proof, sort_keys=True)
     proof = 0
-    #  TODO: Your code here
 
+    while valid_proof(block_string, proof) is False:
+        proof += 1
+    
     print("Proof found: " + str(proof) + " in " + str(timer() - start))
     return proof
 
@@ -39,8 +43,10 @@ def valid_proof(last_hash, proof):
     IE:  last_hash: ...AE9123456, new hash 123456E88...
     """
 
-    # TODO: Your code here!
-    pass
+    guess = f'{last_hash}{proof}'.encode()
+    guess_hash = hashlib.sha256(guess).hexdigest()
+
+    return last_hash[-6:] == guess_hash[:6] 
 
 
 if __name__ == '__main__':
@@ -53,7 +59,7 @@ if __name__ == '__main__':
     coins_mined = 0
 
     # Load or create ID
-    f = open("my_id.txt", "r")
+    f = open("./blockchain/my_id.txt", "r")
     id = f.read()
     print("ID is", id)
     f.close()
